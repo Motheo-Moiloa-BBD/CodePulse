@@ -13,6 +13,12 @@ const routes: Routes = [
     component: NavBarComponent,
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
+  {
+    path: 'admin',
+    component: NavBarComponent,
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({
