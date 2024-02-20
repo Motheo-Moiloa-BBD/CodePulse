@@ -9,7 +9,8 @@ namespace CodePulse.API.Mappings
         public MappingProfile()
         {
             CreateMap<Category, CategoryDTO>().ReverseMap();
-            CreateMap<CreateCategoryRequestDTO, Category>(); 
+            CreateMap<CreateCategoryRequestDTO, Category>();
+            CreateMap<UpdateCategoryRequestDTO, Category>();
         }
     }
 }

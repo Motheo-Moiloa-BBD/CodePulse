@@ -30,7 +30,7 @@ namespace CodePulse.API.Controllers
             var category = mapper.Map<CreateCategoryRequestDTO, Category>(request);
 
             var savedCategory = await categoryRepository.CreateAsync(category);
-            
+
             //Map Domain Model to DTO
             var response = mapper.Map<Category, CategoryDTO>(savedCategory);
 
@@ -41,7 +41,7 @@ namespace CodePulse.API.Controllers
         [HttpGet]
         public async Task<IActionResult> getAllCategories()
         {
-           var categories = await categoryRepository.getAllAsync();
+            var categories = await categoryRepository.getAllAsync();
 
             //Map Domain model to DTO
             var response = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
@@ -52,17 +52,40 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> getCategoryById([FromRoute]Guid id)
+        public async Task<IActionResult> getCategoryById([FromRoute] Guid id)
         {
             var exisitingCategory = await categoryRepository.getById(id);
 
-            if(exisitingCategory == null)
+            if (exisitingCategory == null)
             {
                 return NotFound("Category with id " + id + " not found.");
             }
 
             //Map from domain model to dto
             var response = mapper.Map<Category, CategoryDTO>(exisitingCategory);
+
+            return Ok(response);
+        }
+
+        //https://localhost:xxxx/api/categories/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> updateCategoryById([FromRoute] Guid id, UpdateCategoryRequestDTO request)
+        {
+            var category = new Category(){
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle,
+            };
+
+            await categoryRepository.updateAsync(category);
+
+            if(category == null)
+            {
+                return NotFound("Category with id " + id + " not found.");
+            }
+
+            var response = mapper.Map<Category, CategoryDTO>(category);
 
             return Ok(response);
         }
