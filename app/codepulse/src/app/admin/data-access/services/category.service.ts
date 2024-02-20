@@ -23,4 +23,10 @@ export class CategoryService {
       `${this.appConfig.config?.apibaseURL}/api/categories`
     );
   }
+
+  getCategoryById(id: string): Observable<Category> {
+    return this.http.get<Category>(
+      `${this.appConfig.config?.apibaseURL}/api/categories/${id}`
+    );
+  }
 }
