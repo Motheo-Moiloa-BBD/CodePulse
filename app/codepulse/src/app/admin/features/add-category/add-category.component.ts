@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-category.component.css'],
 })
 export class AddCategoryComponent implements OnDestroy {
-  addCategoryRequest: AddCategoryRequest;
   private addCategorySubscription?: Subscription;
 
   addCategoryForm = new FormGroup({
@@ -22,12 +21,7 @@ export class AddCategoryComponent implements OnDestroy {
   constructor(
     private categoryService: CategoryService,
     private router: Router
-  ) {
-    this.addCategoryRequest = {
-      name: '',
-      urlHandle: '',
-    };
-  }
+  ) {}
 
   //Reactive forms
   onSubmit() {
@@ -41,17 +35,6 @@ export class AddCategoryComponent implements OnDestroy {
       .subscribe({
         next: (response) => {
           this.router.navigateByUrl('/admin/categories');
-        },
-      });
-  }
-
-  //Template driven formsw
-  onFormSubmit() {
-    this.addCategorySubscription = this.categoryService
-      .addCategory(this.addCategoryRequest)
-      .subscribe({
-        next: (response) => {
-          console.log('This was successful!');
         },
       });
   }

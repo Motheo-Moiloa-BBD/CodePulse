@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category.model';
 import { AppConfigService } from 'src/app/app-config.service';
+import { UpdateCategory } from '../models/update-category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,16 @@ export class CategoryService {
   getCategoryById(id: string): Observable<Category> {
     return this.http.get<Category>(
       `${this.appConfig.config?.apibaseURL}/api/categories/${id}`
+    );
+  }
+
+  updateCategory(
+    id: string,
+    updateCategoryRequest: UpdateCategory
+  ): Observable<Category> {
+    return this.http.put<Category>(
+      `${this.appConfig.config?.apibaseURL}/api/categories/${id}`,
+      updateCategoryRequest
     );
   }
 }

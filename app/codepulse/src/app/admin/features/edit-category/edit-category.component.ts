@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Category } from '../../data-access/models/category.model';
 import { CategoryService } from '../../data-access/services/category.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { UpdateCategory } from '../../data-access/models/update-category.model';
 
 @Component({
   selector: 'app-edit-category',
@@ -13,6 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class EditCategoryComponent implements OnInit, OnDestroy {
   category?: Category;
   categorySubscription?: Subscription;
+  editCategorySubscription?: Subscription;
   id: string | null = null;
 
   editCategoryForm = new FormGroup({
@@ -23,7 +25,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,10 +49,24 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmit(): void {
-    console.log(this.editCategoryForm.value);
+    const updateCategoryRequest: UpdateCategory = {
+      name: this.editCategoryForm.value.name as string,
+      urlHandle: this.editCategoryForm.value.urlHandle as string,
+    };
+
+    if (this.id) {
+      this.categorySubscription = this.categoryService
+        .updateCategory(this.id, updateCategoryRequest)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/categories');
+          },
+        });
+    }
   }
 
   ngOnDestroy(): void {
     this.categorySubscription?.unsubscribe();
+    this.editCategorySubscription?.unsubscribe();
   }
 }
