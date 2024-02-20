@@ -48,5 +48,23 @@ namespace CodePulse.API.Controllers
 
             return Ok(response);
         }
+
+        //https://localhost:xxxx/api/categories/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> getCategoryById([FromRoute]Guid id)
+        {
+            var exisitingCategory = await categoryRepository.getById(id);
+
+            if(exisitingCategory == null)
+            {
+                return NotFound("Category with id " + id + " not found.");
+            }
+
+            //Map from domain model to dto
+            var response = mapper.Map<Category, CategoryDTO>(exisitingCategory);
+
+            return Ok(response);
+        }
     }
 }
