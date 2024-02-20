@@ -3,6 +3,7 @@ import { AddCategoryRequest } from '../../data-access/models/add-category-reques
 import { CategoryService } from '../../data-access/services/category.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -18,7 +19,10 @@ export class AddCategoryComponent implements OnDestroy {
     urlHandle: new FormControl('', { validators: [Validators.required] }),
   });
 
-  constructor(private categoryService: CategoryService) {
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router
+  ) {
     this.addCategoryRequest = {
       name: '',
       urlHandle: '',
@@ -36,7 +40,7 @@ export class AddCategoryComponent implements OnDestroy {
       .addCategory(addCategoryRequest)
       .subscribe({
         next: (response) => {
-          console.log('This was successful!');
+          this.router.navigateByUrl('/admin/categories');
         },
       });
   }
