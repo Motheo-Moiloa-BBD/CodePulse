@@ -20,6 +20,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
 //Add Repositories before building (Injected)
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

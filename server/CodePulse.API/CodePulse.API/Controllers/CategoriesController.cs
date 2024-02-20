@@ -1,4 +1,5 @@
-﻿using CodePulse.API.Data;
+﻿using AutoMapper;
+using CodePulse.API.Data;
 using CodePulse.API.Models.Domain;
 using CodePulse.API.Models.DTO;
 using CodePulse.API.Repositories.Interface;
@@ -12,34 +13,38 @@ namespace CodePulse.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IMapper mapper;
 
         //Injecting repository using a constructor
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper)
         {
             this.categoryRepository = categoryRepository;
+            this.mapper = mapper;
         }
 
-        //
-
+        //https://localhost:xxxx/api/categories
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request)
         {
             //Map DTO to Domain Model
-            var category = new Category
-            {
-                Name = request.Name,
-                UrlHandle = request.UrlHandle
-            };
+            var category = mapper.Map<CreateCategoryRequestDTO, Category>(request);
 
-            await categoryRepository.CreateAsync(category);
-
+            var savedCategory = await categoryRepository.CreateAsync(category);
+            
             //Map Domain Model to DTO
-            var response = new CategoryDTO
-            {
-                Id = category.Id,
-                Name = category.Name,
-                UrlHandle = request.UrlHandle
-            };
+            var response = mapper.Map<Category, CategoryDTO>(savedCategory);
+
+            return Ok(response);
+        }
+
+        //https://localhost:xxxx/api/categories
+        [HttpGet]
+        public async Task<IActionResult> getAllCategories()
+        {
+           var categories = await categoryRepository.getAllAsync();
+
+            //Map Domain model to DTO
+            var response = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
 
             return Ok(response);
         }

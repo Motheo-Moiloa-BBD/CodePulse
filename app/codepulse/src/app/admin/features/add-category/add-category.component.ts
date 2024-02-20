@@ -25,6 +25,7 @@ export class AddCategoryComponent implements OnDestroy {
     };
   }
 
+  //Reactive forms
   onSubmit() {
     const addCategoryRequest: AddCategoryRequest = {
       name: this.addCategoryForm.value.name,
@@ -40,6 +41,7 @@ export class AddCategoryComponent implements OnDestroy {
       });
   }
 
+  //Template driven formsw
   onFormSubmit() {
     this.addCategorySubscription = this.categoryService
       .addCategory(this.addCategoryRequest)
