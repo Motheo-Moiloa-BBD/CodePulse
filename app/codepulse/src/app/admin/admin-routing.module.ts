@@ -4,6 +4,7 @@ import { CategoryListComponent } from './features/category-list/category-list.co
 import { AddCategoryComponent } from './features/add-category/add-category.component';
 import { EditCategoryComponent } from './features/edit-category/edit-category.component';
 import { BlogPostListComponent } from './features/blog-post-list/blog-post-list.component';
+import { AddBlogPostComponent } from './features/add-blog-post/add-blog-post.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'blogposts',
     component: BlogPostListComponent,
+  },
+  {
+    path: 'blogposts/add',
+    component: AddBlogPostComponent,
   },
 ];
 

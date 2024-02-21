@@ -7,6 +7,7 @@ import { AddCategoryComponent } from './features/add-category/add-category.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditCategoryComponent } from './features/edit-category/edit-category.component';
 import { BlogPostListComponent } from './features/blog-post-list/blog-post-list.component';
+import { AddBlogPostComponent } from './features/add-blog-post/add-blog-post.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { BlogPostListComponent } from './features/blog-post-list/blog-post-list.
     AddCategoryComponent,
     EditCategoryComponent,
     BlogPostListComponent,
+    AddBlogPostComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule],
 })
