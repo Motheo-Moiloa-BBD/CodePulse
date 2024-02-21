@@ -11,10 +11,10 @@ import { AppConfigService } from 'src/app/app-config.service';
 export class BlogPostService {
   constructor(private http: HttpClient, private appConfig: AppConfigService) {}
 
-  createBlogPost(blogPost: AddBlogpost): Observable<BlogPost> {
+  createBlogPost(addBlogPost: AddBlogpost): Observable<BlogPost> {
     return this.http.post<BlogPost>(
       `${this.appConfig.config?.apibaseURL}/api/blogposts`,
-      blogPost
+      addBlogPost
     );
   }
 }

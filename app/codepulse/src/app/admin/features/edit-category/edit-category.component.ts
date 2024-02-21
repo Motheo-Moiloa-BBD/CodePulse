@@ -13,9 +13,9 @@ import { UpdateCategory } from '../../data-access/models/update-category.model';
 })
 export class EditCategoryComponent implements OnInit, OnDestroy {
   category?: Category;
-  categorySubscription?: Subscription;
-  editCategorySubscription?: Subscription;
-  updateCategorySubscription?: Subscription;
+  private categorySubscription?: Subscription;
+  private editCategorySubscription?: Subscription;
+  private updateCategorySubscription?: Subscription;
   id: string | null = null;
 
   editCategoryForm = new FormGroup({
