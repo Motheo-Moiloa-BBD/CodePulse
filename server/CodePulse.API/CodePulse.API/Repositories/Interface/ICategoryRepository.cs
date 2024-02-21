@@ -8,5 +8,7 @@ namespace CodePulse.API.Repositories.Interface
         Task<IEnumerable<Category>> getAllAsync();
         Task<Category> getById(Guid id);
         Task<Category?> updateAsync(Category category);
+
+        Task<Category?> deleteAsync(Guid id);
     }
 }

@@ -2,6 +2,7 @@
 using CodePulse.API.Data;
 using CodePulse.API.Models.Domain;
 using CodePulse.API.Models.DTO;
+using CodePulse.API.Repositories.Implementation;
 using CodePulse.API.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -89,5 +90,23 @@ namespace CodePulse.API.Controllers
 
             return Ok(response);
         }
+
+        //https://localhost:xxxx/api/categories/{id}
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> deleteCategory([FromRoute] Guid id)
+        {
+            var category = await categoryRepository.deleteAsync(id);
+
+            if(category == null)
+            {
+                return NotFound("Category with id " + id + " not found.");
+            }
+
+            //convert domain model to dto
+            var response = mapper.Map<Category, CategoryDTO>(category);
+            return Ok(response);
+        }
+
     }
 }
