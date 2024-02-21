@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfigService } from './app-config.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 const appInitializerFn = (appConfig: AppConfigService) => {
   return () => {
@@ -23,6 +24,7 @@ const appInitializerFn = (appConfig: AppConfigService) => {
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [
     AppConfigService,
