@@ -19,6 +19,7 @@ namespace CodePulse.API.Controllers
             this.blogPostRepository = blogPostRepository;
             this.mapper = mapper;            
         }
+        
         //https://localhost:xxxx/api/blogposts
         [HttpPost]
         public async Task<IActionResult> createBlogPost(CreateBlogPostRequestDTO request)
@@ -30,6 +31,18 @@ namespace CodePulse.API.Controllers
 
             //map domain to dto
             var response = mapper.Map<BlogPost, BlogPostDTO>(blogPost);
+
+            return Ok(response);
+        }
+
+        //https://localhost:xxxx/api/blogposts
+        [HttpGet]
+        public async Task<IActionResult> getAllBlogPosts()
+        {
+            var blogPosts = await blogPostRepository.getAllAsync();
+
+            //convert domain model to dto
+            var response = mapper.Map<IEnumerable<BlogPost>, IEnumerable<BlogPostDTO>>(blogPosts);
 
             return Ok(response);
         }

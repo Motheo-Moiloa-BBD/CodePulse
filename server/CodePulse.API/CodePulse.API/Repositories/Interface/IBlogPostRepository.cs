@@ -5,5 +5,7 @@ namespace CodePulse.API.Repositories.Interface
     public interface IBlogPostRepository
     {
         Task<BlogPost> createAsync(BlogPost blogpost);
+
+        Task<IEnumerable<BlogPost>> getAllAsync();
     }
 }
