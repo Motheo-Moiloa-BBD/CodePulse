@@ -14,10 +14,12 @@ export class AddBlogPostComponent {
     shortDescription: new FormControl(''),
     content: new FormControl(''),
     featuredImageUrl: new FormControl(''),
-    publishedDate: new FormControl([
-      formatDate(Date.now(), 'yyyy-MM-dd', 'en'),
-    ]),
+    publishedDate: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
     author: new FormControl(''),
-    isVisible: new FormControl(false),
+    isVisible: new FormControl(true),
   });
+
+  onFormSubmit() {
+    console.log(this.addBlogPostForm.value);
+  }
 }
