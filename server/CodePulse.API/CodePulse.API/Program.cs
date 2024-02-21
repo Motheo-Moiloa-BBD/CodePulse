@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
 
 //Add Repositories before building (Injected)
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
