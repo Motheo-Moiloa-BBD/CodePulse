@@ -40,4 +40,10 @@ export class CategoryService {
       updateCategoryRequest
     );
   }
+
+  deleteCategory(id: string): Observable<Category> {
+    return this.http.delete<Category>(
+      `${this.appConfig.config?.apibaseURL}/api/categories/${id}`
+    );
+  }
 }

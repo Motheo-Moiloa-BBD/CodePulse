@@ -15,6 +15,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   category?: Category;
   categorySubscription?: Subscription;
   editCategorySubscription?: Subscription;
+  updateCategorySubscription?: Subscription;
   id: string | null = null;
 
   editCategoryForm = new FormGroup({
@@ -65,8 +66,21 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     }
   }
 
+  onDelete(): void {
+    if (this.id) {
+      this.editCategorySubscription = this.categoryService
+        .deleteCategory(this.id)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/categories');
+          },
+        });
+    }
+  }
+
   ngOnDestroy(): void {
     this.categorySubscription?.unsubscribe();
     this.editCategorySubscription?.unsubscribe();
+    this.updateCategorySubscription?.unsubscribe();
   }
 }
