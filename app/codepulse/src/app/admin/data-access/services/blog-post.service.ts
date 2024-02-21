@@ -17,4 +17,10 @@ export class BlogPostService {
       addBlogPost
     );
   }
+
+  getAllBlogPosts(): Observable<BlogPost[]> {
+    return this.http.get<BlogPost[]>(
+      `${this.appConfig.config?.apibaseURL}/api/blogposts`
+    );
+  }
 }
