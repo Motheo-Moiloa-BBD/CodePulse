@@ -58,11 +58,19 @@
         <label for="featured-image-url" class="form-label"
           >Featured Image Url</label
         >
+
+        <ng-container *ngIf="image.value !== ''">
+          <figure>
+            <img [src]="image.value" alt="Image Preview" class="my-2" />
+          </figure>
+        </ng-container>
+
         <input
           type="text"
           id="featured-image-url"
           class="form-control"
           formControlName="featuredImageUrl"
+          #image
         />
       </section>
 

@@ -7,3 +7,7 @@ textarea {
   max-height: 350px;
   overflow-y: scroll;
 }
+
+img {
+  height: 100px;
+}
