@@ -44,6 +44,7 @@ export class AddBlogPostComponent {
 
     this.blogPostService.createBlogPost(addBlogPostRequest).subscribe({
       next: (response) => {
+        console.log(response);
         this.router.navigateByUrl('/admin/blogposts');
       },
     });
