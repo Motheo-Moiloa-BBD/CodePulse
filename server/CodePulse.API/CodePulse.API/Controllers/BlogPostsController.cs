@@ -70,5 +70,24 @@ namespace CodePulse.API.Controllers
 
             return Ok(response);
         }
+        
+        //https://localhost:xxxx/api/blogposts/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> getBlogPostById([FromRoute] Guid id)
+        {
+            var exisitingBlogPost = await blogPostRepository.getByIdAsync(id);
+
+            if(exisitingBlogPost is null)
+            {
+                return NotFound("BlogPost with id " + id + " not found.");
+            }
+
+            //map domain model to dto
+            var response = mapper.Map<BlogPost, BlogPostDTO>(exisitingBlogPost);
+
+            return Ok(response);
+        }
+
     }
 }
