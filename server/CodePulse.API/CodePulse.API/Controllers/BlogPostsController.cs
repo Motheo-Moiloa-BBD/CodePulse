@@ -13,10 +13,12 @@ namespace CodePulse.API.Controllers
     {
         private readonly IMapper mapper;
         private readonly IBlogPostRepository blogPostRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public BlogPostsController(IMapper mapper, IBlogPostRepository blogPostRepository)
+        public BlogPostsController(IMapper mapper, IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository)
         {
             this.blogPostRepository = blogPostRepository;
+            this.categoryRepository = categoryRepository;
             this.mapper = mapper;            
         }
         
@@ -24,11 +26,33 @@ namespace CodePulse.API.Controllers
         [HttpPost]
         public async Task<IActionResult> createBlogPost(CreateBlogPostRequestDTO request)
         {
-            //map dto to domain 
-            var blogPost = mapper.Map<CreateBlogPostRequestDTO, BlogPost>(request);
+            //map dto to domain
+            var blogPost = new BlogPost
+            {
+                Author = request.Author,
+                Content = request.Content,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                IsVisible = request.IsVisible,
+                PublishedDate = request.PublishedDate,
+                ShortDescription = request.ShortDescription,
+                Title = request.Title,
+                UrlHandle = request.UrlHandle,
+                Categories = new List<Category>()
+            };
+
+            foreach(var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.getById(categoryGuid);
+
+                if(existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
 
             blogPost = await blogPostRepository.createAsync(blogPost);
 
+            //TODO: Modify this conversion as well
             //map domain to dto
             var response = mapper.Map<BlogPost, BlogPostDTO>(blogPost);
 
