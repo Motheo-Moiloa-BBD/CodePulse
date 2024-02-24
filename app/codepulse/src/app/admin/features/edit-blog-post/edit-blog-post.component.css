@@ -1,0 +1,13 @@
+textarea {
+  height: 350px;
+  max-height: 350px;
+}
+
+.right {
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+img {
+  height: 100px;
+}
