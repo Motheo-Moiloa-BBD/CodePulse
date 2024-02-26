@@ -19,6 +19,7 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
   id: string | null = null;
   private blogpostSubscription?: Subscription;
   private updateBlogpostSubscription?: Subscription;
+  private deleteBlogPostSubscription?: Subscription;
   categories$?: Observable<Category[]>;
 
   editBlogPostForm = new FormGroup({
@@ -95,8 +96,21 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
     }
   }
 
+  onDelete() {
+    if (this.id) {
+      this.deleteBlogPostSubscription = this.blogpostService
+        .deleteBlogPostById(this.id)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/blogposts');
+          },
+        });
+    }
+  }
+
   ngOnDestroy(): void {
     this.blogpostSubscription?.unsubscribe();
     this.updateBlogpostSubscription?.unsubscribe();
+    this.deleteBlogPostSubscription?.unsubscribe();
   }
 }

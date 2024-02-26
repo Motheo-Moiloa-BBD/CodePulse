@@ -40,4 +40,10 @@ export class BlogPostService {
       updatedBlogPost
     );
   }
+
+  deleteBlogPostById(id: string): Observable<BlogPost> {
+    return this.http.delete<BlogPost>(
+      `${this.appConfig.config?.apibaseURL}/api/blogposts/${id}`
+    );
+  }
 }
