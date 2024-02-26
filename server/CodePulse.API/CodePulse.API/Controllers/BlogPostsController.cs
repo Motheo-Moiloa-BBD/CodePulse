@@ -89,5 +89,50 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
+        //https://localhost:xxxx/api/blogposts/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> updateBlogPostById([FromRoute] Guid id, UpdateBlogPostRequestDTO request)
+        {
+            //convert dto to domain model
+            var blogPost = new BlogPost
+            {
+                Id = id,
+                Author = request.Author,
+                Content = request.Content,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                IsVisible = request.IsVisible,
+                PublishedDate = request.PublishedDate,
+                ShortDescription = request.ShortDescription,
+                Title = request.Title,
+                UrlHandle = request.UrlHandle,
+                Categories = new List<Category>()
+            };
+
+            foreach (var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.getById(categoryGuid);
+
+                if (existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
+
+            var updatedBlogPost = await blogPostRepository.updateAysnc(blogPost);
+
+            if(updatedBlogPost == null)
+            {
+                return NotFound("BlogPost with id " + id + " not found.");
+            }
+
+            //convert domain model back to DTO
+            var response = mapper.Map<BlogPost, BlogPostDTO>(updatedBlogPost);
+
+            return Ok(response);
+
+
+        }
+
     }
 }
