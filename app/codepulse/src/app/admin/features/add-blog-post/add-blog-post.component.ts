@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { AddBlogpost } from '../../data-access/models/add-blogpost.model';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CategoryService } from '../../data-access/services/category.service';
 import { Category } from '../../data-access/models/category.model';
 
@@ -48,7 +48,7 @@ export class AddBlogPostComponent implements OnInit {
       publishedDate: new Date(this.addBlogPostForm.value.publishedDate!),
       author: this.addBlogPostForm.value.author!,
       isVisible: this.addBlogPostForm.value.isVisible!,
-      categories: this.addBlogPostForm.value.categories!,
+      categories: this.addBlogPostForm.value.categories,
     };
 
     this.blogPostService.createBlogPost(addBlogPostRequest).subscribe({

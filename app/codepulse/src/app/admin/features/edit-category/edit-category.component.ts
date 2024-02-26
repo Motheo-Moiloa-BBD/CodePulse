@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Category } from '../../data-access/models/category.model';
 import { CategoryService } from '../../data-access/services/category.service';
 import { FormControl, FormGroup } from '@angular/forms';

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { BlogPost } from '../../data-access/models/blog-post.model';
@@ -7,16 +7,18 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { CategoryService } from '../../data-access/services/category.service';
 import { Category } from '../../data-access/models/category.model';
+import { UpdateBlogPost } from '../../data-access/models/update-blog-post.model';
 
 @Component({
   selector: 'app-edit-blog-post',
   templateUrl: './edit-blog-post.component.html',
   styleUrls: ['./edit-blog-post.component.css'],
 })
-export class EditBlogPostComponent implements OnInit {
+export class EditBlogPostComponent implements OnInit, OnDestroy {
   blogpost?: BlogPost;
   id: string | null = null;
   private blogpostSubscription?: Subscription;
+  private updateBlogpostSubscription?: Subscription;
   categories$?: Observable<Category[]>;
 
   editBlogPostForm = new FormGroup({
@@ -34,7 +36,8 @@ export class EditBlogPostComponent implements OnInit {
   constructor(
     private blogpostService: BlogPostService,
     private categoryService: CategoryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +72,31 @@ export class EditBlogPostComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log(this.editBlogPostForm.value);
+    const updateBlogPostRequest: UpdateBlogPost = {
+      title: this.editBlogPostForm.value.title!,
+      urlHandle: this.editBlogPostForm.value.urlHandle!,
+      shortDescription: this.editBlogPostForm.value.shortDescription!,
+      content: this.editBlogPostForm.value.content!,
+      featuredImageUrl: this.editBlogPostForm.value.featuredImageUrl!,
+      publishedDate: new Date(this.editBlogPostForm.value.publishedDate!),
+      author: this.editBlogPostForm.value.author!,
+      isVisible: this.editBlogPostForm.value.isVisible,
+      categories: this.editBlogPostForm.value.categories,
+    };
+
+    if (this.id && this.editBlogPostForm.valid) {
+      this.blogpostService
+        .updateBlogPostById(this.id, updateBlogPostRequest)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/blogposts');
+          },
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.blogpostSubscription?.unsubscribe();
+    this.updateBlogpostSubscription?.unsubscribe();
   }
 }
