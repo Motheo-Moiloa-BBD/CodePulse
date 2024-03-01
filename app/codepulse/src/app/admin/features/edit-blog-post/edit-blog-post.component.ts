@@ -21,6 +21,7 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
   private updateBlogpostSubscription?: Subscription;
   private deleteBlogPostSubscription?: Subscription;
   categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
 
   editBlogPostForm = new FormGroup({
     title: new FormControl(''),
@@ -106,6 +107,14 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
           },
         });
     }
+  }
+
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
+  }
+
+  closeImageSelector(): void {
+    this.isImageSelectorVisible = false;
   }
 
   ngOnDestroy(): void {
