@@ -10,6 +10,7 @@ import { BlogPostListComponent } from './features/blog-post-list/blog-post-list.
 import { AddBlogPostComponent } from './features/add-blog-post/add-blog-post.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { EditBlogPostComponent } from './features/edit-blog-post/edit-blog-post.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { EditBlogPostComponent } from './features/edit-blog-post/edit-blog-post.
     FormsModule,
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
+    SharedModule,
   ],
 })
 export class AdminModule {}
