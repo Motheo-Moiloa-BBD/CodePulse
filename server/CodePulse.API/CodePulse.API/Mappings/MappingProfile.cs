@@ -18,6 +18,9 @@ namespace CodePulse.API.Mappings
             CreateMap<CreateBlogPostRequestDTO, BlogPost>();
             CreateMap<UpdateBlogPostRequestDTO, BlogPost>();
 
+            //BlogImage mappings
+            CreateMap<BlogImage, BlogImageDTO>().ReverseMap();
+
         }
     }
 }
