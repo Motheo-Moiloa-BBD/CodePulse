@@ -8,6 +8,8 @@ namespace CodePulse.API.Repositories.Interface
         Task<IEnumerable<BlogPost>> getAllAsync();
         Task<BlogPost> getByIdAsync(Guid id);
 
+        Task<BlogPost> getByUrlHandleAsync(string urlHandle);
+
         Task<BlogPost?> updateAysnc(BlogPost blogPost);
 
         Task<BlogPost?> deleteAsync(Guid id);
