@@ -1,3 +1,30 @@
 <section class="container">
-  <h1 class="mt-3">Home</h1>
+  <section class="my-5">
+    <section class="row align-items-stretch">
+      <ng-container *ngIf="blogs$ | async; let blogs">
+        <article class="col-12 col-md-4 mb-3" *ngFor="let blog of blogs">
+          <section class="card h-100">
+            <figure>
+              <img
+                [src]="blog.featuredImageUrl"
+                class="card-img-top"
+                [alt]="blog.title"
+              />
+            </figure>
+            <section class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="card-text">{{ blog.shortDescription }}</p>
+              <span class="d-flex align-items-end" style="flex: 1">
+                <a
+                  [routerLink]="['/home/blog', blog.urlHandle]"
+                  class="btn btn-primary"
+                  >Read More</a
+                >
+              </span>
+            </section>
+          </section>
+        </article>
+      </ng-container>
+    </section>
+  </section>
 </section>
