@@ -20,6 +20,7 @@ namespace CodePulse.API.Controllers
             this.imageRepository = imageRepository;
             this.mapper = mapper;
         }
+        
         //POST: https://localhost:xxxx/api/images
         [HttpPost]
         public async Task<IActionResult> uploadImage([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string title)
@@ -43,6 +44,18 @@ namespace CodePulse.API.Controllers
                 return Ok(response);
             }
             return BadRequest(ModelState);
+        }
+
+        //GET: https://localhost:xxxx/api/images
+        [HttpGet]
+        public async Task<IActionResult> getAllImages()
+        {
+            var images = await imageRepository.getAll();
+
+            //convert domain model to dto
+            var response = mapper.Map<IEnumerable<BlogImage>, IEnumerable<BlogImageDTO>>(images);
+
+            return Ok(response);
         }
 
         private void ValidateFileUpload(IFormFile file)
