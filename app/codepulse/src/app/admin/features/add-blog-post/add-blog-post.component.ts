@@ -1,20 +1,23 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { AddBlogpost } from '../../data-access/models/add-blogpost.model';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CategoryService } from '../../data-access/services/category.service';
 import { Category } from '../../data-access/models/category.model';
+import { ImageService } from 'src/app/shared/data-access/services/image.service';
 
 @Component({
   selector: 'app-add-blog-post',
   templateUrl: './add-blog-post.component.html',
   styleUrls: ['./add-blog-post.component.css'],
 })
-export class AddBlogPostComponent implements OnInit {
+export class AddBlogPostComponent implements OnInit, OnDestroy {
+  private imageSelectorSubscription?: Subscription;
   categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
 
   addBlogPostForm = new FormGroup({
     title: new FormControl(''),
@@ -31,11 +34,22 @@ export class AddBlogPostComponent implements OnInit {
   constructor(
     private blogPostService: BlogPostService,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();
+    this.imageSelectorSubscription = this.imageService
+      .onSelectImage()
+      .subscribe({
+        next: (selectedImage) => {
+          this.addBlogPostForm.patchValue({
+            featuredImageUrl: selectedImage.url,
+          });
+          this.closeImageSelector();
+        },
+      });
   }
 
   onFormSubmit() {
@@ -56,5 +70,17 @@ export class AddBlogPostComponent implements OnInit {
         this.router.navigateByUrl('/admin/blogposts');
       },
     });
+  }
+
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
+  }
+
+  closeImageSelector(): void {
+    this.isImageSelectorVisible = false;
+  }
+
+  ngOnDestroy(): void {
+    this.imageSelectorSubscription?.unsubscribe();
   }
 }

@@ -21,7 +21,7 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
   private blogpostSubscription?: Subscription;
   private updateBlogpostSubscription?: Subscription;
   private deleteBlogPostSubscription?: Subscription;
-  private imageSelectSubscription?: Subscription;
+  private imageSelectorSubscription?: Subscription;
   categories$?: Observable<Category[]>;
   isImageSelectorVisible: boolean = false;
 
@@ -75,14 +75,16 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.imageSelectSubscription = this.imageService.onSelectImage().subscribe({
-      next: (response) => {
-        this.editBlogPostForm.patchValue({
-          featuredImageUrl: response.url,
-        });
-        this.isImageSelectorVisible = false;
-      },
-    });
+    this.imageSelectorSubscription = this.imageService
+      .onSelectImage()
+      .subscribe({
+        next: (selectedImage) => {
+          this.editBlogPostForm.patchValue({
+            featuredImageUrl: selectedImage.url,
+          });
+          this.closeImageSelector();
+        },
+      });
   }
 
   onFormSubmit() {
@@ -133,6 +135,6 @@ export class EditBlogPostComponent implements OnInit, OnDestroy {
     this.blogpostSubscription?.unsubscribe();
     this.updateBlogpostSubscription?.unsubscribe();
     this.deleteBlogPostSubscription?.unsubscribe();
-    this.imageSelectSubscription?.unsubscribe();
+    this.imageSelectorSubscription?.unsubscribe();
   }
 }
