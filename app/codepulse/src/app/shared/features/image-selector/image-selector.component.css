@@ -2,7 +2,7 @@
   overflow-y: scroll;
 }
 
-.images {
+.image {
   min-width: 100px;
   justify-content: center;
   cursor: pointer;

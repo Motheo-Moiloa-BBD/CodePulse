@@ -7,9 +7,10 @@
       <section class="col-8 p-4 left">
         <ng-container *ngIf="images$ | async; let images">
           <section class="d-flex flex-wrap">
-            <section
+            <figure
               *ngFor="let image of images"
-              class="me-1 bg-white d-flex align-items-center flex-column border p-3 images"
+              class="me-1 bg-white d-flex align-items-center flex-column border p-3 image"
+              (click)="selectImage(image)"
             >
               <img
                 [src]="image.url"
@@ -17,8 +18,8 @@
                 alt="Image"
                 class="uploadedImage"
               />
-              <span class="mt-1">{{ image.title }}</span>
-            </section>
+              <figcaption class="mt-1">{{ image.title }}</figcaption>
+            </figure>
           </section>
         </ng-container>
       </section>
