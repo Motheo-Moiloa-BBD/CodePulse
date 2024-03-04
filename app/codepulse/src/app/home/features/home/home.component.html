@@ -1,7 +1,7 @@
 <section class="container">
   <section class="my-5">
     <section class="row align-items-stretch">
-      <ng-container *ngIf="blogs$ | async; let blogs">
+      <ng-container *ngIf="blogs$ | async; let blogs; else: loader">
         <article class="col-12 col-md-4 mb-3" *ngFor="let blog of blogs">
           <section class="card h-100">
             <figure>
@@ -28,3 +28,7 @@
     </section>
   </section>
 </section>
+
+<ng-template #loader>
+  <app-spinner></app-spinner>
+</ng-template>

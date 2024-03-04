@@ -1,1 +1,40 @@
-<p>blog-details works!</p>
+<ng-container *ngIf="blogpost$ | async; let blogpost; else: loader">
+  <article class="container">
+    <section class="py-5">
+      <section class="col-12 col-md-8 col-lg-6 mx-auto">
+        <figure>
+          <img
+            [src]="blogpost.featuredImageUrl"
+            [title]="blogpost.title"
+            class="img-fluid"
+            [alt]="blogpost.title"
+          />
+        </figure>
+
+        <h1 class="mt-4">{{ blogpost.title }}</h1>
+
+        <section class="d-flex justify-content-between mt-4">
+          <span>{{ blogpost.author }}</span>
+          <span>{{ blogpost.publishedDate | date : "dd-MM-yyyy" }}</span>
+        </section>
+
+        <section class="mt-4" *ngIf="blogpost.categories">
+          <span
+            class="badge bg-secondary me-2"
+            *ngFor="let category of blogpost.categories"
+          >
+            {{ category.name }}
+          </span>
+        </section>
+
+        <section class="mt-4 blog-content">
+          <markdown [data]="blogpost.content"></markdown>
+        </section>
+      </section>
+    </section>
+  </article>
+</ng-container>
+
+<ng-template #loader>
+  <app-spinner></app-spinner>
+</ng-template>

@@ -31,6 +31,12 @@ export class BlogPostService {
     );
   }
 
+  getBlogPostByUrl(url: string): Observable<BlogPost> {
+    return this.http.get<BlogPost>(
+      `${this.appConfig.config?.apibaseURL}/api/blogposts/${url}`
+    );
+  }
+
   updateBlogPostById(
     id: string,
     updatedBlogPost: UpdateBlogPost
