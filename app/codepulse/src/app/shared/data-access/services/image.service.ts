@@ -25,4 +25,10 @@ export class ImageService {
       formData
     );
   }
+
+  getAllImages(): Observable<BlogImage[]> {
+    return this.http.get<BlogImage[]>(
+      `${this.appConfig.config?.apibaseURL}/api/images`
+    );
+  }
 }

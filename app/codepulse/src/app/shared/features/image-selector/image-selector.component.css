@@ -1,0 +1,13 @@
+.left {
+  overflow-y: scroll;
+}
+
+.images {
+  min-width: 100px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.uploadedImage {
+  height: 100px;
+}
