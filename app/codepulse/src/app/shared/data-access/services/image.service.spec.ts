@@ -17,24 +17,14 @@ describe('ImageService', () => {
   let httpTestingController: HttpTestingController;
   let appConfigService: AppConfigService;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         ImageService,
         { provide: AppConfigService, useClass: MockAppConfigService },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: (appConfigMock: MockAppConfigService) => () => {
-            return appConfigMock.loadAppConfig();
-          },
-          deps: [AppConfigService],
-          multi: true,
-        },
       ],
     });
-
-    await TestBed.inject(ApplicationInitStatus).donePromise;
 
     service = TestBed.inject(ImageService);
     http = TestBed.inject(HttpClient);
@@ -42,11 +32,11 @@ describe('ImageService', () => {
     appConfigService = TestBed.inject(AppConfigService);
   });
 
-  it('should be created', () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it('should be get the apiBaseUrl', () => {
+  it('should get the apiBaseUrl', () => {
     expect(appConfigService.config?.apibaseURL).toEqual(
       'https://localhost:7097'
     );
