@@ -4,6 +4,7 @@ using CodePulse.API.Models.Domain;
 using CodePulse.API.Models.DTO;
 using CodePulse.API.Repositories.Implementation;
 using CodePulse.API.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodePulse.API.Controllers
@@ -25,6 +26,7 @@ namespace CodePulse.API.Controllers
 
         //https://localhost:xxxx/api/categories
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request)
         {
             //Map DTO to Domain Model
@@ -71,6 +73,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateCategoryById([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
             var category = new Category(){
@@ -94,6 +97,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var category = await categoryRepository.deleteAsync(id);
