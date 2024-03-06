@@ -82,7 +82,7 @@ namespace CodePulse.API.Controllers
                 UrlHandle = request.UrlHandle,
             };
 
-            await categoryRepository.updateAsync(category);
+            category = await categoryRepository.updateAsync(category);
 
             if(category == null)
             {

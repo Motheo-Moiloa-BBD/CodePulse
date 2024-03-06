@@ -24,7 +24,7 @@ namespace CodePulse.API.Repositories.Implementation
                 new Claim(ClaimTypes.Email, user.Email),
             };
 
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Name, role)));
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             //Jwt Security token parameters
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 
