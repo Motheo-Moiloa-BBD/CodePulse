@@ -24,7 +24,7 @@ namespace CodePulse.API.Controllers
         
         //https://localhost:xxxx/api/blogposts
         [HttpPost]
-        public async Task<IActionResult> createBlogPost(CreateBlogPostRequestDTO request)
+        public async Task<IActionResult> CreateBlogPost(CreateBlogPostRequestDTO request)
         {
             //map dto to domain
             var blogPost = new BlogPost
@@ -61,7 +61,7 @@ namespace CodePulse.API.Controllers
 
         //https://localhost:xxxx/api/blogposts
         [HttpGet]
-        public async Task<IActionResult> getAllBlogPosts()
+        public async Task<IActionResult> GetAllBlogPosts()
         {
             var blogPosts = await blogPostRepository.getAllAsync();
 
@@ -74,7 +74,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/blogposts/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> getBlogPostById([FromRoute] Guid id)
+        public async Task<IActionResult> GetBlogPostById([FromRoute] Guid id)
         {
             var exisitingBlogPost = await blogPostRepository.getByIdAsync(id);
 
@@ -92,7 +92,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/blogposts/{urlHandle}
         [HttpGet]
         [Route("{urlHandle}")]
-        public async Task<IActionResult> getBlogPostByUrlHandle([FromRoute] string urlHandle)
+        public async Task<IActionResult> GetBlogPostByUrlHandle([FromRoute] string urlHandle)
         {
             var exisitingBlogPost = await blogPostRepository.getByUrlHandleAsync(urlHandle);
 
@@ -110,7 +110,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/blogposts/{id}
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> updateBlogPostById([FromRoute] Guid id, UpdateBlogPostRequestDTO request)
+        public async Task<IActionResult> UpdateBlogPostById([FromRoute] Guid id, UpdateBlogPostRequestDTO request)
         {
             //convert dto to domain model
             var blogPost = new BlogPost
@@ -155,7 +155,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/blogposts/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> deleteBlogPostById([FromRoute]Guid id)
+        public async Task<IActionResult> DeleteBlogPostById([FromRoute]Guid id)
         {
             var blogPost = await blogPostRepository.deleteAsync(id);
 

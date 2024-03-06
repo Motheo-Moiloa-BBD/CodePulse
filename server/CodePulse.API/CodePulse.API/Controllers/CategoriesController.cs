@@ -40,7 +40,7 @@ namespace CodePulse.API.Controllers
 
         //https://localhost:xxxx/api/categories
         [HttpGet]
-        public async Task<IActionResult> getAllCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
             var categories = await categoryRepository.getAllAsync();
 
@@ -53,7 +53,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> getCategoryById([FromRoute] Guid id)
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
         {
             var exisitingCategory = await categoryRepository.getById(id);
 
@@ -71,7 +71,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> updateCategoryById([FromRoute] Guid id, UpdateCategoryRequestDTO request)
+        public async Task<IActionResult> UpdateCategoryById([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
             var category = new Category(){
                 Id = id,
@@ -94,7 +94,7 @@ namespace CodePulse.API.Controllers
         //https://localhost:xxxx/api/categories/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> deleteCategory([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var category = await categoryRepository.deleteAsync(id);
 

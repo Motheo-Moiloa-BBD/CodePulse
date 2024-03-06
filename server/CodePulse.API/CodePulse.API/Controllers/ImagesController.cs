@@ -23,7 +23,7 @@ namespace CodePulse.API.Controllers
         
         //POST: https://localhost:xxxx/api/images
         [HttpPost]
-        public async Task<IActionResult> uploadImage([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string title)
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string title)
         {
             ValidateFileUpload(file);
 
@@ -48,7 +48,7 @@ namespace CodePulse.API.Controllers
 
         //GET: https://localhost:xxxx/api/images
         [HttpGet]
-        public async Task<IActionResult> getAllImages()
+        public async Task<IActionResult> GetAllImages()
         {
             var images = await imageRepository.getAll();
 
