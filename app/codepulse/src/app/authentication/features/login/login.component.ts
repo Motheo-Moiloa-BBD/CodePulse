@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { LoginRequest } from '../../data-access/models/login-request.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../data-access/services/authentication.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,11 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   onFormSubmit(): void {
     if (this.loginForm.valid) {
@@ -25,7 +31,18 @@ export class LoginComponent {
 
       this.authenticationService.login(loginRequest).subscribe({
         next: (loginResponse) => {
-          console.log(loginResponse);
+          //Set Auth Cookie
+          this.cookieService.set(
+            'Authorization',
+            `Bearer ${loginResponse.token}`,
+            undefined,
+            '/',
+            undefined,
+            true,
+            'Strict'
+          );
+          //Redirect back to home
+          this.router.navigateByUrl('/home');
         },
       });
     }
