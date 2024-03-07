@@ -121,8 +121,8 @@ app.UseCors(options =>
     options.AllowAnyMethod();
 });
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.UseStaticFiles(new StaticFileOptions

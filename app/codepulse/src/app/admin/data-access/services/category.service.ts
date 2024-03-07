@@ -5,16 +5,21 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UpdateCategory } from '../models/update-category.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private http: HttpClient, private appConfig: AppConfigService) {}
+  constructor(
+    private http: HttpClient,
+    private appConfig: AppConfigService,
+    private cookieService: CookieService
+  ) {}
 
   addCategory(addCategoryRequest: AddCategoryRequest): Observable<void> {
     return this.http.post<void>(
-      `${this.appConfig.config?.apibaseURL}/api/categories`,
+      `${this.appConfig.config?.apibaseURL}/api/categories?addAuth=true`,
       addCategoryRequest
     );
   }
@@ -36,14 +41,14 @@ export class CategoryService {
     updateCategoryRequest: UpdateCategory
   ): Observable<Category> {
     return this.http.put<Category>(
-      `${this.appConfig.config?.apibaseURL}/api/categories/${id}`,
+      `${this.appConfig.config?.apibaseURL}/api/categories/${id}?addAuth=true`,
       updateCategoryRequest
     );
   }
 
   deleteCategory(id: string): Observable<Category> {
     return this.http.delete<Category>(
-      `${this.appConfig.config?.apibaseURL}/api/categories/${id}`
+      `${this.appConfig.config?.apibaseURL}/api/categories/${id}?addAuth=true`
     );
   }
 }

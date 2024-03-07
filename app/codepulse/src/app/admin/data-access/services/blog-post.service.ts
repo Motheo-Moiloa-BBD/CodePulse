@@ -14,7 +14,7 @@ export class BlogPostService {
 
   createBlogPost(addBlogPost: AddBlogpost): Observable<BlogPost> {
     return this.http.post<BlogPost>(
-      `${this.appConfig.config?.apibaseURL}/api/blogposts`,
+      `${this.appConfig.config?.apibaseURL}/api/blogposts?addAuth=true`,
       addBlogPost
     );
   }
@@ -42,14 +42,14 @@ export class BlogPostService {
     updatedBlogPost: UpdateBlogPost
   ): Observable<BlogPost> {
     return this.http.put<BlogPost>(
-      `${this.appConfig.config?.apibaseURL}/api/blogposts/${id}`,
+      `${this.appConfig.config?.apibaseURL}/api/blogposts/${id}?addAuth=true`,
       updatedBlogPost
     );
   }
 
   deleteBlogPostById(id: string): Observable<BlogPost> {
     return this.http.delete<BlogPost>(
-      `${this.appConfig.config?.apibaseURL}/api/blogposts/${id}`
+      `${this.appConfig.config?.apibaseURL}/api/blogposts/${id}?addAuth=true`
     );
   }
 }
