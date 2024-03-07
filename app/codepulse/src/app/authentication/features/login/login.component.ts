@@ -41,6 +41,13 @@ export class LoginComponent {
             true,
             'Strict'
           );
+
+          //Set User
+          this.authenticationService.setUser({
+            email: loginResponse.email,
+            roles: loginResponse.roles,
+          });
+
           //Redirect back to home
           this.router.navigateByUrl('/home');
         },
