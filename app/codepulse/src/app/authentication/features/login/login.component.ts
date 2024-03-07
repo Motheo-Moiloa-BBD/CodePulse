@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginRequest } from '../../data-access/models/login-request.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../../data-access/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,20 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   onFormSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      const loginRequest: LoginRequest = {
+        email: this.loginForm.value.email!,
+        password: this.loginForm.value.password!,
+      };
+
+      this.authenticationService.login(loginRequest).subscribe({
+        next: (loginResponse) => {
+          console.log(loginResponse);
+        },
+      });
     }
   }
 }
