@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavBarComponent } from './shared/features/nav-bar/nav-bar.component';
 import { authGuard } from './authentication/utils/guards/auth.guard';
+import { PageNotFoundComponent } from './shared/features/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
         (m) => m.AuthenticationModule
       ),
   },
+
+  //Page Not found routes, these need to be last
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({
