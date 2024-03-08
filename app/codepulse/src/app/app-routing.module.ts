@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavBarComponent } from './shared/features/nav-bar/nav-bar.component';
+import { authGuard } from './authentication/utils/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: NavBarComponent,
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
