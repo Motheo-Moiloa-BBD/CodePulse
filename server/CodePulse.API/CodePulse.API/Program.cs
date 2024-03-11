@@ -13,6 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//Add cors policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("angular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().WithMethods("GET", "POST", "PUT", "DELETE");
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -98,6 +107,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
@@ -114,22 +125,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(options =>
-{
-    options.AllowAnyHeader();
-    options.AllowAnyOrigin();
-    options.AllowAnyMethod();
-});
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
     RequestPath = "/Images"
 });
+
+app.UseCors("angular");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
