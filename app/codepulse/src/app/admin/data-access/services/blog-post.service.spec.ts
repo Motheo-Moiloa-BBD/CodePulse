@@ -36,7 +36,7 @@ describe('BlogPostService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('it should get a blog-post by id', () => {
+  it('it should get a blogpost by id', () => {
     const mockBlogPostId = mockBlogPosts[0].id;
     service.getBlogPostById(mockBlogPostId).subscribe({
       next: (blogPost) => {
@@ -53,7 +53,7 @@ describe('BlogPostService', () => {
     mockRequest.flush(mockBlogPosts[0]);
   });
 
-  it('should handle server error when fetching a blog-post by id', () => {
+  it('should handle server error when fetching a blogpost by id', () => {
     const mockBlogPostId = mockBlogPosts[1].id;
 
     service.getBlogPostById(mockBlogPostId).subscribe({
@@ -76,7 +76,7 @@ describe('BlogPostService', () => {
     });
   });
 
-  it('it should get a blog-post by its url handle', () => {
+  it('it should get a blogpost by its url handle', () => {
     const mockUrlHandle = 'testing-blogpost';
     service.getBlogPostByUrl(mockUrlHandle).subscribe({
       next: (blogPost) => {
@@ -137,8 +137,8 @@ describe('BlogPostService', () => {
     mockRequest.flush(mockBlogPosts[0]);
   });
 
-  it('should update blog post by id', () => {
-    const mockBlopPostId = mockBlogPosts[1].id;
+  it('should update blogpost by id', () => {
+    const mockBlogPostId = mockBlogPosts[1].id;
     const mockUpdatedBlogPost: UpdateBlogPost = {
       title: 'testing-blogpost-updated',
       urlHandle: 'testing-blogpost-updated',
@@ -151,19 +151,37 @@ describe('BlogPostService', () => {
       categories: [mockCategories[0], mockCategories[1]],
     };
 
-    service.updateBlogPostById(mockBlopPostId, mockUpdatedBlogPost).subscribe({
+    service.updateBlogPostById(mockBlogPostId, mockUpdatedBlogPost).subscribe({
       next: (updatedBlogPost) => {
         expect(updatedBlogPost).toEqual(mockUpdatedBlogPosts[1]);
       },
     });
 
     const mockRequest = httpTestingController.expectOne(
-      `https://localhost:7097/api/blogposts/${mockBlopPostId}?addAuth=true`
+      `https://localhost:7097/api/blogposts/${mockBlogPostId}?addAuth=true`
     );
 
     expect(mockRequest.request.method).toEqual('PUT');
 
     mockRequest.flush(mockUpdatedBlogPosts[1]);
+  });
+
+  it('should delete a blogpost by id', () => {
+    const mockBlogPostId = mockBlogPosts[1].id;
+
+    service.deleteBlogPostById(mockBlogPostId).subscribe({
+      next: (deletedBlogPost) => {
+        expect(deletedBlogPost).toEqual(mockBlogPosts[1]);
+      },
+    });
+
+    const mockRequest = httpTestingController.expectOne(
+      `https://localhost:7097/api/blogposts/${mockBlogPostId}?addAuth=true`
+    );
+
+    expect(mockRequest.request.method).toEqual('DELETE');
+
+    mockRequest.flush(mockBlogPosts[1]);
   });
 
   afterEach(() => {
