@@ -5,20 +5,15 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UpdateCategory } from '../models/update-category.model';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  constructor(
-    private http: HttpClient,
-    private appConfig: AppConfigService,
-    private cookieService: CookieService
-  ) {}
+  constructor(private http: HttpClient, private appConfig: AppConfigService) {}
 
-  addCategory(addCategoryRequest: AddCategoryRequest): Observable<void> {
-    return this.http.post<void>(
+  addCategory(addCategoryRequest: AddCategoryRequest): Observable<Category> {
+    return this.http.post<Category>(
       `${this.appConfig.config?.apibaseURL}/api/categories?addAuth=true`,
       addCategoryRequest
     );

@@ -17,7 +17,7 @@ import { mockCategories } from 'src/app/mocking/mock-categories';
 
 describe('BlogPostService', () => {
   let service: BlogPostService;
-  let httpTestingController: HttpTestingController;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -29,14 +29,19 @@ describe('BlogPostService', () => {
     }).compileComponents();
 
     service = TestBed.inject(BlogPostService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    //assert that there are no outstanding requests
+    httpMock.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('it should get a blogpost by id', () => {
+  it('should get a blogpost by id', () => {
     const mockBlogPostId = mockBlogPosts[0].id;
     service.getBlogPostById(mockBlogPostId).subscribe({
       next: (blogPost) => {
@@ -44,7 +49,7 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts/${mockBlogPostId}`
     );
 
@@ -64,7 +69,7 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts/${mockBlogPostId}`
     );
 
@@ -76,7 +81,7 @@ describe('BlogPostService', () => {
     });
   });
 
-  it('it should get a blogpost by its url handle', () => {
+  it('should get a blogpost by its url handle', () => {
     const mockUrlHandle = 'testing-blogpost';
     service.getBlogPostByUrl(mockUrlHandle).subscribe({
       next: (blogPost) => {
@@ -84,7 +89,7 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts/${mockUrlHandle}`
     );
 
@@ -93,14 +98,14 @@ describe('BlogPostService', () => {
     mockRequest.flush(mockBlogPosts[0]);
   });
 
-  it('it should get a list of blogposts', () => {
+  it('should get a list of blogposts', () => {
     service.getAllBlogPosts().subscribe({
       next: (blogPosts) => {
         expect(blogPosts.length).toEqual(mockBlogPosts.length);
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts`
     );
 
@@ -109,7 +114,7 @@ describe('BlogPostService', () => {
     mockRequest.flush(mockBlogPosts);
   });
 
-  it('it should create a blogpost', () => {
+  it('should create a blogpost', () => {
     const mockAddBlogPost: AddBlogpost = {
       title: 'testing blogpost',
       urlHandle: 'testing-blogpost',
@@ -128,7 +133,7 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts?addAuth=true`
     );
 
@@ -157,7 +162,7 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts/${mockBlogPostId}?addAuth=true`
     );
 
@@ -175,17 +180,12 @@ describe('BlogPostService', () => {
       },
     });
 
-    const mockRequest = httpTestingController.expectOne(
+    const mockRequest = httpMock.expectOne(
       `https://localhost:7097/api/blogposts/${mockBlogPostId}?addAuth=true`
     );
 
     expect(mockRequest.request.method).toEqual('DELETE');
 
     mockRequest.flush(mockBlogPosts[1]);
-  });
-
-  afterEach(() => {
-    //assert that there are no outstanding requests
-    httpTestingController.verify();
   });
 });

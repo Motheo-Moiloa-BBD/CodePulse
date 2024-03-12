@@ -1,6 +1,6 @@
 import { Category } from '../admin/data-access/models/category.model';
 
-export const mockCategories: Category[] = [
+const mockCategories: Category[] = [
   {
     id: '2EDAEA58-5B28-4CE5-4695-08DC2D5B8A1D',
     name: 'HTML',
@@ -22,3 +22,23 @@ export const mockCategories: Category[] = [
     urlHandle: 'test-category',
   },
 ];
+
+const mockUpdatedCategories: Category[] = [
+  {
+    id: '2EDAEA58-5B28-4CE5-4695-08DC2D5B8A1D',
+    name: 'HTML-updated',
+    urlHandle: 'html-blogs-updated',
+  },
+  {
+    id: 'C4DA4B67-1855-4A5A-5E2F-08DC2DEBC3CA',
+    name: 'ASP.NET-Core-updated',
+    urlHandle: 'aspnet-blogs-updated',
+  },
+  {
+    id: '3963BC2F-CF95-4EE0-2E48-08DC2FF78D0D',
+    name: 'Angular-updated',
+    urlHandle: 'angular-blogs-updated',
+  },
+];
+
+export { mockCategories, mockUpdatedCategories };
