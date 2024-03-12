@@ -1,5 +1,3 @@
-import { Category } from './category.model';
-
 export interface AddBlogpost {
   title: string;
   urlHandle: string;
