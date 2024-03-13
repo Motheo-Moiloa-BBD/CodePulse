@@ -52,7 +52,7 @@ describe('AuthenticationService', () => {
       password: 'mock@mock',
     };
 
-    service.login(mockLoginRequest).subscribe({
+    const loginSubscription = service.login(mockLoginRequest).subscribe({
       next: (loginResponse) => {
         expect(loginResponse).toEqual(mockLoginResponses[0]);
       },
@@ -65,6 +65,8 @@ describe('AuthenticationService', () => {
     expect(mockRequest.request.method).toEqual('POST');
 
     mockRequest.flush(mockLoginResponses[0]);
+
+    loginSubscription.unsubscribe();
   });
 
   it('should set user', async () => {
@@ -74,11 +76,13 @@ describe('AuthenticationService', () => {
     expect(localStorage.getItem('user-email')).toBeDefined();
     expect(localStorage.getItem('user-roles')).toBeDefined();
 
-    service.user().subscribe({
+    const userSubscription = service.user().subscribe({
       next: (user) => {
         expect(user).toEqual(mockUsers[1]);
       },
     });
+
+    userSubscription.unsubscribe();
   });
 
   it('should return a user', () => {
@@ -92,6 +96,7 @@ describe('AuthenticationService', () => {
   });
 
   it('should return undefined when the email and roles is undefined', () => {
+    service.$user.next(undefined);
     expect(service.getUser()).toBeUndefined();
   });
 
