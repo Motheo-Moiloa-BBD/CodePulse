@@ -81,6 +81,20 @@ describe('AuthenticationService', () => {
     });
   });
 
+  it('should return a user', () => {
+    service.setUser(mockUsers[1]);
+
+    const mockUser = service.getUser();
+    expect(mockUser).toEqual(mockUsers[1]);
+    expect(mockUser).toBeDefined();
+    expect(mockUser?.email).toBeDefined();
+    expect(mockUser?.roles).toBeDefined();
+  });
+
+  it('should return undefined when the email and roles is undefined', () => {
+    expect(service.getUser()).toBeUndefined();
+  });
+
   it('should logout a user', () => {
     service.logout();
 
