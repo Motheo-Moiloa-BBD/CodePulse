@@ -25,7 +25,7 @@ describe('CategoryListComponent', () => {
   let location: Location;
 
   //used async since compileComponents() is asynchronous
-  beforeEach(async () => {
+  beforeEach(waitForAsync(() => {
     const routes: Routes = [
       {
         path: 'admin/categories/add',
@@ -41,7 +41,9 @@ describe('CategoryListComponent', () => {
       ],
       providers: [{ provide: CategoryService, useClass: mockCategoryService }],
     }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(CategoryListComponent);
     component = fixture.componentInstance;
 
@@ -81,14 +83,11 @@ describe('CategoryListComponent', () => {
     expect(h1.textContent).toEqual('Category List');
   });
 
-  it('should navigate to add category page', fakeAsync(() => {
-    const leftMouseButton = 0;
-
+  it('should navigate to add category page when add category anchor is clicked', fakeAsync(() => {
     const anchorDE: DebugElement = fixture.debugElement;
     const aDe = anchorDE.query(By.css('a'));
     const anchorWithRouterLink: HTMLElement = aDe.nativeElement;
 
-    //TODO: mock using clicking on the anchor element
     anchorWithRouterLink.click();
 
     tick();
@@ -97,4 +96,10 @@ describe('CategoryListComponent', () => {
 
     expect(location.path()).toBe('/admin/categories/add');
   }));
+
+  xit('should not render a list of categories when categories$ is undefined', () => {});
+
+  xit('should render a list of categories when categories$ is defined', () => {});
+
+  xit('should navigate to edit category page when edit category anchor is clicked', () => {});
 });
