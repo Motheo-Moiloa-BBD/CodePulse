@@ -7,7 +7,7 @@ import { BlogPostListComponent } from './features/blog-post-list/blog-post-list.
 import { AddBlogPostComponent } from './features/add-blog-post/add-blog-post.component';
 import { EditBlogPostComponent } from './features/edit-blog-post/edit-blog-post.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'categories',
     component: CategoryListComponent,
