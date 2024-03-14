@@ -9,7 +9,7 @@ import {
 import { CategoryListComponent } from './category-list.component';
 import { CategoryService } from '../../data-access/services/category.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { mockCategoryService } from 'src/app/mocking/category-service-mock';
+import { MockCategoryService } from 'src/app/mocking/category-service-mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -46,7 +46,7 @@ describe('CategoryListComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
       ],
-      providers: [{ provide: CategoryService, useClass: mockCategoryService }],
+      providers: [{ provide: CategoryService, useClass: MockCategoryService }],
     }).compileComponents();
   }));
 
@@ -90,7 +90,7 @@ describe('CategoryListComponent', () => {
     expect(h1.textContent).toEqual('Category List');
   });
 
-  it('should navigate to add category page when add category anchor is clicked', fakeAsync(() => {
+  it('should navigate to add category page when add category anchor element is clicked', fakeAsync(() => {
     const addCategoryAnchor: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('a');
 
@@ -132,7 +132,7 @@ describe('CategoryListComponent', () => {
     );
   });
 
-  it('should navigate to edit category page when edit category anchor is clicked', fakeAsync(() => {
+  it('should navigate to edit category page when edit category anchor element is clicked', fakeAsync(() => {
     const editCategoryAnchor: HTMLElement[] =
       fixture.debugElement.nativeElement.querySelectorAll('a');
 
