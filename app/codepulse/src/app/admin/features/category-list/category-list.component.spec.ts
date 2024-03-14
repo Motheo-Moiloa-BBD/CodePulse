@@ -16,6 +16,9 @@ import { By } from '@angular/platform-browser';
 import { Router, Routes } from '@angular/router';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { Location } from '@angular/common';
+import { of, throwError } from 'rxjs';
+import { mockCategories } from 'src/app/mocking/mock-categories';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
 
 describe('CategoryListComponent', () => {
   let component: CategoryListComponent;
@@ -30,6 +33,10 @@ describe('CategoryListComponent', () => {
       {
         path: 'admin/categories/add',
         component: AddCategoryComponent,
+      },
+      {
+        path: 'admin/categories/:id',
+        component: EditCategoryComponent,
       },
     ];
 
@@ -84,11 +91,10 @@ describe('CategoryListComponent', () => {
   });
 
   it('should navigate to add category page when add category anchor is clicked', fakeAsync(() => {
-    const anchorDE: DebugElement = fixture.debugElement;
-    const aDe = anchorDE.query(By.css('a'));
-    const anchorWithRouterLink: HTMLElement = aDe.nativeElement;
+    const addCategoryAnchor: HTMLElement[] =
+      fixture.debugElement.nativeElement.querySelectorAll('a');
 
-    anchorWithRouterLink.click();
+    addCategoryAnchor[0].click();
 
     tick();
 
@@ -97,9 +103,45 @@ describe('CategoryListComponent', () => {
     expect(location.path()).toBe('/admin/categories/add');
   }));
 
-  xit('should not render a list of categories when categories$ is undefined', () => {});
+  it('should not render a table of categories when categories$ has an error', () => {
+    component.categories$ = throwError(() => new Error('Error occurred'));
 
-  xit('should render a list of categories when categories$ is defined', () => {});
+    fixture.detectChanges();
 
-  xit('should navigate to edit category page when edit category anchor is clicked', () => {});
+    const tableElement = fixture.debugElement.query(By.css('table'));
+    expect(tableElement).toBeFalsy();
+  });
+
+  it('should render a table with the correct categories', () => {
+    const tableRows = fixture.debugElement.queryAll(By.css('tbody tr'));
+
+    expect(tableRows.length).toEqual(4);
+
+    //check category data in the table
+    expect(tableRows[0].nativeElement.textContent).toContain(
+      `${mockCategories[0].id}`
+    );
+    expect(tableRows[1].nativeElement.textContent).toContain(
+      `${mockCategories[1].id}`
+    );
+    expect(tableRows[2].nativeElement.textContent).toContain(
+      `${mockCategories[2].id}`
+    );
+    expect(tableRows[3].nativeElement.textContent).toContain(
+      `${mockCategories[3].id}`
+    );
+  });
+
+  it('should navigate to edit category page when edit category anchor is clicked', fakeAsync(() => {
+    const editCategoryAnchor: HTMLElement[] =
+      fixture.debugElement.nativeElement.querySelectorAll('a');
+
+    editCategoryAnchor[1].click();
+
+    tick();
+
+    fixture.detectChanges();
+
+    expect(location.path()).toBe(`/admin/categories/${mockCategories[0].id}`);
+  }));
 });

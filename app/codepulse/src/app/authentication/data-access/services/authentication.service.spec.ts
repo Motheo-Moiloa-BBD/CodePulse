@@ -52,7 +52,7 @@ describe('AuthenticationService', () => {
       password: 'mock@mock',
     };
 
-    const loginSubscription = service.login(mockLoginRequest).subscribe({
+    service.login(mockLoginRequest).subscribe({
       next: (loginResponse) => {
         expect(loginResponse).toEqual(mockLoginResponses[0]);
       },
@@ -65,8 +65,6 @@ describe('AuthenticationService', () => {
     expect(mockRequest.request.method).toEqual('POST');
 
     mockRequest.flush(mockLoginResponses[0]);
-
-    loginSubscription.unsubscribe();
   });
 
   it('should set user', async () => {
@@ -76,13 +74,11 @@ describe('AuthenticationService', () => {
     expect(localStorage.getItem('user-email')).toBeDefined();
     expect(localStorage.getItem('user-roles')).toBeDefined();
 
-    const userSubscription = service.user().subscribe({
+    service.user().subscribe({
       next: (user) => {
         expect(user).toEqual(mockUsers[1]);
       },
     });
-
-    userSubscription.unsubscribe();
   });
 
   it('should return a user', () => {
