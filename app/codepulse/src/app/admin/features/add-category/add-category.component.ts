@@ -30,13 +30,15 @@ export class AddCategoryComponent implements OnDestroy {
       urlHandle: this.addCategoryForm.value.urlHandle,
     };
 
-    this.addCategorySubscription = this.categoryService
-      .addCategory(addCategoryRequest)
-      .subscribe({
-        next: (response) => {
-          this.router.navigateByUrl('/admin/categories');
-        },
-      });
+    if (this.addCategoryForm.valid) {
+      this.addCategorySubscription = this.categoryService
+        .addCategory(addCategoryRequest)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/categories');
+          },
+        });
+    }
   }
 
   ngOnDestroy(): void {

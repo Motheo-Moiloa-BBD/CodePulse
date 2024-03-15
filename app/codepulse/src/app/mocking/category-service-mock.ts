@@ -6,4 +6,8 @@ export class MockCategoryService {
   getAllCategories(): Observable<Category[]> {
     return of(mockCategories);
   }
+
+  addCategory(): Observable<Category> {
+    return of(mockCategories[0]);
+  }
 }
