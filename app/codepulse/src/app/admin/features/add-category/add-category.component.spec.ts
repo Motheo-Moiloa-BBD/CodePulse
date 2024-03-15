@@ -69,10 +69,8 @@ describe('AddCategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  //Class Testing
-
   //DOM interactions : HTML template unit tests
-  it('should display category list heading on render', () => {
+  it('should display add category list heading on render', () => {
     const h1De: DebugElement = debugElement.query(By.css('h1'));
     const h1: HTMLElement = h1De.nativeElement;
 
@@ -80,7 +78,7 @@ describe('AddCategoryComponent', () => {
     expect(h1.textContent).toEqual('Add Category');
   });
 
-  it('should not submit form when the form required fields are empty', fakeAsync(() => {
+  it('should not submit form when required fields are empty', fakeAsync(() => {
     component.addCategoryForm.controls.name.setValue('');
     component.addCategoryForm.controls.urlHandle.setValue('');
 
@@ -91,9 +89,11 @@ describe('AddCategoryComponent', () => {
     expect(component.addCategoryForm.valid).toBeFalsy();
   }));
 
-  it('should submit form when submit form requried fields are not empty and redirect to the category list component', fakeAsync(() => {
+  it('should submit form when requried fields are not empty and redirect to the category list component', fakeAsync(() => {
     component.addCategoryForm.controls.name.setValue('HTML');
     component.addCategoryForm.controls.urlHandle.setValue('html-blogs');
+
+    expect(component.addCategoryForm.valid).toBeTruthy();
 
     submitButton.click();
 
@@ -101,7 +101,6 @@ describe('AddCategoryComponent', () => {
 
     tick();
 
-    expect(component.addCategoryForm.valid).toBeTruthy();
     expect(location.path()).toBe(`/admin/categories`);
   }));
 });
