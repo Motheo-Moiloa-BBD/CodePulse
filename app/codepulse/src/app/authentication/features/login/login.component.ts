@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  error: string = '';
+  loading: boolean = false;
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -50,6 +53,9 @@ export class LoginComponent {
 
           //Redirect back to home
           this.router.navigateByUrl('/home');
+        },
+        error: (err: Error) => {
+          //TODO:
         },
       });
     }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from '../models/login-request.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../models/login-response.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AppConfigService } from 'src/app/app-config.service';
 import { User } from '../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
@@ -20,10 +20,12 @@ export class AuthenticationService {
   ) {}
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(
-      `${this.appConfig.config?.apibaseURL}/api/auth/login`,
-      loginRequest
-    );
+    return this.http
+      .post<LoginResponse>(
+        `${this.appConfig.config?.apibaseURL}/api/auth/login`,
+        loginRequest
+      )
+      .pipe(catchError(this.handleError));
   }
 
   setUser(user: User): void {
@@ -57,5 +59,26 @@ export class AuthenticationService {
     localStorage.clear();
     this.cookieService.delete('Authorization', '/');
     this.$user.next(undefined);
+  }
+
+  //TODO : Update this handler to handle errors properly then also add snackbar to display the message to the user on the login component
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      //client side or network error occurred.
+      //TODO: Handle it accorddingly
+
+      console.error('An error occured: ', error.error);
+    } else {
+      //Backend returned an unsuccessful response code.
+      //Response body may contain clues as to what could have went wrong
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    //Return an observable with a user-facing message.
+    return throwError(
+      () => new Error('Something went wrong, please try again later.')
+    );
   }
 }
