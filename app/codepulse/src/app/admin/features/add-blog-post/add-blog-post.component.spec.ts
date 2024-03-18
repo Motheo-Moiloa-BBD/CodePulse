@@ -71,6 +71,7 @@ describe('AddBlogPostComponent', () => {
     blogpostService = TestBed.inject(BlogPostService);
     imageService = TestBed.inject(ImageService);
     router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
 
     debugElement = fixture.debugElement;
     addBlogPostForm = debugElement.query(By.css('form')).nativeElement;
