@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { AddBlogpost } from '../../data-access/models/add-blogpost.model';
 import { Router } from '@angular/router';
@@ -20,15 +20,15 @@ export class AddBlogPostComponent implements OnInit, OnDestroy {
   isImageSelectorVisible: boolean = false;
 
   addBlogPostForm = new FormGroup({
-    title: new FormControl(''),
-    urlHandle: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
+    urlHandle: new FormControl('', [Validators.required]),
     shortDescription: new FormControl(''),
     content: new FormControl(''),
     featuredImageUrl: new FormControl(''),
     publishedDate: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
     author: new FormControl(''),
     isVisible: new FormControl(true),
-    categories: new FormControl(),
+    categories: new FormControl([''], [Validators.required]),
   });
 
   constructor(
@@ -62,14 +62,16 @@ export class AddBlogPostComponent implements OnInit, OnDestroy {
       publishedDate: new Date(this.addBlogPostForm.value.publishedDate!),
       author: this.addBlogPostForm.value.author!,
       isVisible: this.addBlogPostForm.value.isVisible!,
-      categories: this.addBlogPostForm.value.categories,
+      categories: this.addBlogPostForm.value.categories!,
     };
 
-    this.blogPostService.createBlogPost(addBlogPostRequest).subscribe({
-      next: (response) => {
-        this.router.navigateByUrl('/admin/blogposts');
-      },
-    });
+    if (this.addBlogPostForm.valid) {
+      this.blogPostService.createBlogPost(addBlogPostRequest).subscribe({
+        next: (response) => {
+          this.router.navigateByUrl('/admin/blogposts');
+        },
+      });
+    }
   }
 
   openImageSelector(): void {

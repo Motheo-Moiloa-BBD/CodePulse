@@ -17,8 +17,6 @@ import { CategoryListComponent } from '../category-list/category-list.component'
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { AddCategoryRequest } from '../../data-access/models/add-category-request.model';
-import { mockCategories } from 'src/app/mocking/mock-categories';
 
 describe('AddCategoryComponent', () => {
   let component: AddCategoryComponent;
@@ -70,7 +68,7 @@ describe('AddCategoryComponent', () => {
   });
 
   //DOM interactions : HTML template unit tests
-  it('should display add category list heading on render', () => {
+  it('should display add category heading on render', () => {
     const h1De: DebugElement = debugElement.query(By.css('h1'));
     const h1: HTMLElement = h1De.nativeElement;
 
