@@ -17,7 +17,7 @@
               <span class="d-flex align-items-end" style="flex: 1">
                 <a
                   [routerLink]="['/home/blog', blog.urlHandle]"
-                  class="btn btn-primary"
+                  class="btn btn-primary read"
                   >Read More</a
                 >
               </span>
@@ -30,5 +30,5 @@
 </section>
 
 <ng-template #loader>
-  <app-spinner></app-spinner>
+  <app-spinner class="loader"></app-spinner>
 </ng-template>
