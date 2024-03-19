@@ -27,6 +27,6 @@ export const mockImages: BlogImage[] = [
     fileName: 'FourthImage',
     title: 'FourthImage',
     fileExtension: 'jpg',
-    url: 'https://localhost:7097/Images/FourthImage.jpg',
+    url: 'test-blog-post',
   },
 ];

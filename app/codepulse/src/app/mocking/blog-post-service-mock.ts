@@ -11,4 +11,8 @@ export class MockBlogPostService {
   createBlogPost(addBlogPost: AddBlogpost): Observable<BlogPost> {
     return of(mockBlogPosts[0]);
   }
+
+  getBlogPostById(id: string): Observable<BlogPost> {
+    return of(mockBlogPosts[1]);
+  }
 }
