@@ -17,6 +17,10 @@ export class MockBlogPostService {
     return of(mockBlogPosts[1]);
   }
 
+  getBlogPostByUrl(url: string): Observable<BlogPost> {
+    return of(mockBlogPosts[1]);
+  }
+
   updateBlogPostById(
     id: string,
     updatedBlogpost: UpdateBlogPost

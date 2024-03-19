@@ -42,10 +42,7 @@ describe('HomeComponent', () => {
       ],
       declarations: [HomeComponent],
       providers: [{ provide: BlogPostService, useClass: MockBlogPostService }],
-    });
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
