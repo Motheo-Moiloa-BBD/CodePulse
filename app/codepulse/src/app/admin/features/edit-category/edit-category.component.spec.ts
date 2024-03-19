@@ -115,14 +115,14 @@ describe('EditCategoryComponent', () => {
     expect(h1.textContent).toEqual('Edit Category');
   });
 
-  it('should submit form and navigate to category list page', fakeAsync(() => {
+  it('should submit form and navigate to category list component', fakeAsync(() => {
     saveButton.click();
     fixture.detectChanges();
     tick();
     expect(location.path()).toBe(`/admin/categories`);
   }));
 
-  it('should delete category and navigate to category list', fakeAsync(() => {
+  it('should delete category and navigate to category list component', fakeAsync(() => {
     deleteButton.click();
     fixture.detectChanges();
     tick();

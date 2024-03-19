@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { EditBlogPostComponent } from './edit-blog-post.component';
 import { CategoryService } from '../../data-access/services/category.service';
@@ -143,4 +149,32 @@ describe('EditBlogPostComponent', () => {
     //h1 element should render the heading
     expect(h1.textContent).toEqual('Edit BlogPost');
   });
+
+  it('should submit form when the form is valid, the id is valid and navigate to blogpost list component', fakeAsync(() => {
+    saveButton.click();
+    fixture.detectChanges();
+    tick();
+    expect(location.path()).toEqual('/admin/blogposts');
+  }));
+
+  it('should open image selector component', fakeAsync(() => {
+    const openButton: HTMLButtonElement = debugElement.query(
+      By.css('.open')
+    ).nativeElement;
+
+    openButton.click();
+
+    fixture.detectChanges();
+
+    tick();
+
+    expect(component.isImageSelectorVisible).toBeTrue();
+  }));
+
+  it('should delete blogpost and navigate to blogpost list component', fakeAsync(() => {
+    deleteButton.click();
+    fixture.detectChanges();
+    tick();
+    expect(location.path()).toBe(`/admin/blogposts`);
+  }));
 });
