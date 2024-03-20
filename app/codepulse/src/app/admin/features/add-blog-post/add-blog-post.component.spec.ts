@@ -89,8 +89,7 @@ describe('AddBlogPostComponent', () => {
 
   //DOM interactions : HTML template unit tests
   it('should display add blogpost heading on render', () => {
-    const h1De: DebugElement = debugElement.query(By.css('h1'));
-    const h1: HTMLElement = h1De.nativeElement;
+    const h1: HTMLElement = debugElement.query(By.css('h1')).nativeElement;
 
     //h1 element should render the heading
     expect(h1.textContent).toEqual('Add BlogPost');
