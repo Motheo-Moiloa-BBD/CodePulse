@@ -7,6 +7,11 @@ const mockLoginResponses: LoginResponse[] = [
     roles: ['Reader'],
     token: 'dlfsdfsdfggrddfkdlsoreolp',
   },
+  {
+    email: 'mockAdmin@mock.co.za',
+    roles: ['Reader', 'Writer'],
+    token: 'fdgsdfdsfdsfdsfdsfsae',
+  },
 ];
 
 const mockUsers: User[] = [

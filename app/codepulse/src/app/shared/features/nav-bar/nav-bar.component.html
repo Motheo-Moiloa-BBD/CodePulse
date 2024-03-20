@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <section class="container">
-    <a class="navbar-brand" routerLink="/home">CodePulse</a>
+    <a class="navbar-brand brand-home" [routerLink]="['/home']">CodePulse</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,14 +15,17 @@
     <section class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/home"
+          <a
+            class="nav-link active home"
+            aria-current="page"
+            [routerLink]="['/home']"
             >Home</a
           >
         </li>
         <ng-container
           *ngIf="user !== undefined && user.roles.includes('Writer')"
         >
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown admin">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -34,13 +37,17 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" routerLink="/admin/categories"
+                <a
+                  class="dropdown-item categories"
+                  [routerLink]="['/admin/categories']"
                   >Categories</a
                 >
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item" routerLink="/admin/blogposts"
+                <a
+                  class="dropdown-item blogposts"
+                  [routerLink]="['/admin/blogposts']"
                   >BlogPosts</a
                 >
               </li>
@@ -52,16 +59,16 @@
         <ng-container *ngIf="user === undefined; else showLogout">
           <a
             [routerLink]="['/auth/login']"
-            class="btn btn-primary"
+            class="btn btn-primary login"
             title="Login"
             >Login</a
           >
         </ng-container>
 
         <ng-template #showLogout>
-          <section class="d-flex align-items-center">
+          <section class="d-flex align-items-center showLogout">
             <span>{{ user?.email }}</span>
-            <button class="btn btn-primary ms-3" (click)="onLogout()">
+            <button class="btn btn-primary ms-3 logout" (click)="onLogout()">
               Logout
             </button>
           </section>
