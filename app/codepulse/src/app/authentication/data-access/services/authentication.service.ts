@@ -61,7 +61,6 @@ export class AuthenticationService {
     this.$user.next(undefined);
   }
 
-  //TODO : Update this handler to handle errors properly then also add snackbar to display the message to the user on the login component
   private handleError(error: HttpErrorResponse) {
     let message = '';
     if (error.status === 0) {

@@ -32,6 +32,7 @@ export class LoginComponent {
 
   onFormSubmit(): void {
     this.submitted = true;
+    this.error = '';
     if (this.loginForm.valid) {
       const loginRequest: LoginRequest = {
         email: this.loginForm.value.email!,

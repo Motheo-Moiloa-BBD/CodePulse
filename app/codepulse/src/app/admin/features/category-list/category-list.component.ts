@@ -16,4 +16,8 @@ export class CategoryListComponent implements OnInit {
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();
   }
+
+  onSearch(queryText: string) {
+    this.categories$ = this.categoryService.getAllCategories(queryText);
+  }
 }

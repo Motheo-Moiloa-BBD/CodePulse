@@ -40,11 +40,11 @@ namespace CodePulse.API.Controllers
             return CreatedAtAction("CreateCategory",response);
         }
 
-        //https://localhost:xxxx/api/categories
+        //https://localhost:xxxx/api/categories?query=keyword
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
         {
-            var categories = await categoryRepository.getAllAsync();
+            var categories = await categoryRepository.getAllAsync(query);
 
             //Map Domain model to DTO
             var response = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);

@@ -5,7 +5,7 @@ namespace CodePulse.API.Repositories.Interface
     public interface ICategoryRepository
     {
         Task<Category> CreateAsync(Category category);
-        Task<IEnumerable<Category>> getAllAsync();
+        Task<IEnumerable<Category>> getAllAsync(string? query = null);
         Task<Category?> getById(Guid id);
         Task<Category?> updateAsync(Category category);
 

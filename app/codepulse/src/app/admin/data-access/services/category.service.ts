@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AddCategoryRequest } from '../models/add-category-request.model';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Category } from '../models/category.model';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UpdateCategory } from '../models/update-category.model';
@@ -19,9 +19,18 @@ export class CategoryService {
     );
   }
 
-  getAllCategories(): Observable<Category[]> {
+  getAllCategories(query?: string): Observable<Category[]> {
+    let params = new HttpParams();
+
+    if (query) {
+      params = params.set('query', query);
+    }
+
     return this.http.get<Category[]>(
-      `${this.appConfig.config?.apibaseURL}/api/categories`
+      `${this.appConfig.config?.apibaseURL}/api/categories`,
+      {
+        params: params,
+      }
     );
   }
 
