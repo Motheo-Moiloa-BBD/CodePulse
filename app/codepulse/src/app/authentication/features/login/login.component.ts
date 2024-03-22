@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   error: string = '';
   loading: boolean = false;
+  submitted: boolean = false;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -25,7 +26,12 @@ export class LoginComponent {
     private router: Router
   ) {}
 
+  get loginFormControl() {
+    return this.loginForm.controls;
+  }
+
   onFormSubmit(): void {
+    this.submitted = true;
     if (this.loginForm.valid) {
       const loginRequest: LoginRequest = {
         email: this.loginForm.value.email!,
