@@ -58,7 +58,7 @@ namespace CodePulse.API.Controllers
             //map domain to dto
             var response = mapper.Map<BlogPost, BlogPostDTO>(blogPost);
 
-            return Ok(response);
+            return CreatedAtAction("CreateBlogPost", response);
         }
 
         //https://localhost:xxxx/api/blogposts

@@ -63,22 +63,15 @@ export class AuthenticationService {
 
   //TODO : Update this handler to handle errors properly then also add snackbar to display the message to the user on the login component
   private handleError(error: HttpErrorResponse) {
+    let message = '';
     if (error.status === 0) {
       //client side or network error occurred.
-      //TODO: Handle it accorddingly
-
-      console.error('An error occured: ', error.error);
+      message = `Error: ${error.message}`;
     } else {
       //Backend returned an unsuccessful response code.
-      //Response body may contain clues as to what could have went wrong
-      console.error(
-        `Backend returned code ${error.status}, body was: `,
-        error.error
-      );
+      message = error.error;
     }
     //Return an observable with a user-facing message.
-    return throwError(
-      () => new Error('Something went wrong, please try again later.')
-    );
+    return throwError(() => new Error(message));
   }
 }

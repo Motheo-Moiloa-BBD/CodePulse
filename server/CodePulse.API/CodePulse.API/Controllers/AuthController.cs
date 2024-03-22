@@ -48,10 +48,12 @@ namespace CodePulse.API.Controllers
 
                     return Ok(response);
                 }
+                else
+                {
+                    return Unauthorized("Email or Password Incorrect.");
+                }
             }
-            ModelState.AddModelError("", "Email or Password Incorrect.");
-
-            return ValidationProblem(ModelState);
+            return Unauthorized("User with email: " + request.Email + " does not exist.");
         }
 
         //https://localhost:xxxx/api/auth/register

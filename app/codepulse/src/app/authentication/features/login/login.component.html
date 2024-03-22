@@ -42,6 +42,9 @@
 
         <section class="mt-3">
           <button type="submit" class="btn btn-primary submit">Login</button>
+          <span class="text-danger d-block" *ngIf="error !== '' && submitted">
+            {{ error }}
+          </span>
         </section>
       </form>
     </section>

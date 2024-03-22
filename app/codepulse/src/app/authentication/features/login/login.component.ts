@@ -61,7 +61,7 @@ export class LoginComponent {
           this.router.navigateByUrl('/home');
         },
         error: (err: Error) => {
-          //TODO:
+          this.error = err.message;
         },
       });
     }

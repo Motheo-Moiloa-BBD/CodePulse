@@ -37,7 +37,7 @@ namespace CodePulse.API.Controllers
             //Map Domain Model to DTO
             var response = mapper.Map<Category, CategoryDTO>(savedCategory);
 
-            return Ok(response);
+            return CreatedAtAction("CreateCategory",response);
         }
 
         //https://localhost:xxxx/api/categories
