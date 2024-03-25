@@ -40,9 +40,15 @@ namespace CodePulse.API.Controllers
 
         //https://localhost:xxxx/api/categories?query=keyword&sortBy=columnName&sortOrder=desc/asc
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string? sortBy, [FromQuery] string? sortOrder)
+        public async Task<IActionResult> GetAllCategories(
+            [FromQuery] string? query,
+            [FromQuery] string? sortBy,
+            [FromQuery] string? sortOrder,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var categories = await categoryRepository.getAllAsync(query, sortBy, sortOrder);
+            var categories = await categoryRepository
+                .getAllAsync(query, sortBy, sortOrder, pageNumber, pageSize);
 
             //Map Domain model to DTO
             var response = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
@@ -109,6 +115,17 @@ namespace CodePulse.API.Controllers
             //convert domain model to dto
             var response = mapper.Map<Category, CategoryDTO>(category);
             return Ok(response);
+        }
+
+        //https://localhost:xxxx/api/categories/count
+        [HttpGet]
+        [Route("count")]
+        [Authorize(Roles = "Writer")]
+        public async Task<IActionResult> GetCategoriesCount()
+        {
+            var count = await categoryRepository.getCount();
+
+            return Ok(count);
         }
 
     }

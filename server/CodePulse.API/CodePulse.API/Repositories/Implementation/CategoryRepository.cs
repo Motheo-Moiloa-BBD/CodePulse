@@ -21,7 +21,12 @@ namespace CodePulse.API.Repositories.Implementation
         }
 
 
-        public async Task<IEnumerable<Category>> getAllAsync(string? query = null, string? sortBy = null, string? sortOrder = null)
+        public async Task<IEnumerable<Category>> getAllAsync(
+            string? query = null,
+            string? sortBy = null,
+            string? sortOrder = null,
+            int? pageNumber = 1,
+            int? pageSize = 100)
         {
             //Query the DB
             var categories = dbContext.Categories.AsQueryable();
@@ -45,6 +50,10 @@ namespace CodePulse.API.Repositories.Implementation
             }
 
             //Pagination
+            //pageNumber 1 pageSize 5 - skip 0, take 5
+
+            var skipResults = (pageNumber - 1) * pageSize;
+            categories = categories.Skip(skipResults ?? 0).Take(pageSize ?? 100);
 
             return await categories.ToListAsync();
         }
@@ -82,5 +91,9 @@ namespace CodePulse.API.Repositories.Implementation
             return exisitingCategory;
         }
 
+        public async Task<int> getCount()
+        {
+            return await dbContext.Categories.CountAsync();
+        }
     }
 }

@@ -22,7 +22,9 @@ export class CategoryService {
   getAllCategories(
     query?: string,
     sortBy?: string,
-    sortOrder?: string
+    sortOrder?: string,
+    pageNumber?: number,
+    pageSize?: number
   ): Observable<Category[]> {
     let params = new HttpParams();
 
@@ -36,6 +38,14 @@ export class CategoryService {
 
     if (sortOrder) {
       params = params.set('sortOrder', sortOrder);
+    }
+
+    if (pageNumber) {
+      params = params.set('pageNumber', pageNumber);
+    }
+
+    if (pageSize) {
+      params = params.set('pageSize', pageSize);
     }
 
     return this.http.get<Category[]>(
@@ -65,6 +75,12 @@ export class CategoryService {
   deleteCategory(id: string): Observable<Category> {
     return this.http.delete<Category>(
       `${this.appConfig.config?.apibaseURL}/api/categories/${id}?addAuth=true`
+    );
+  }
+
+  getCategoryCount(): Observable<number> {
+    return this.http.get<number>(
+      `${this.appConfig.config?.apibaseURL}/api/categories/count?addAuth=true`
     );
   }
 }
