@@ -26,4 +26,8 @@ export class MockCategoryService {
   deleteCategory(id: string): Observable<Category> {
     return of(mockCategories[0]);
   }
+
+  getCategoryCount() {
+    return of(mockCategories.length);
+  }
 }
