@@ -19,11 +19,23 @@ export class CategoryService {
     );
   }
 
-  getAllCategories(query?: string): Observable<Category[]> {
+  getAllCategories(
+    query?: string,
+    sortBy?: string,
+    sortOrder?: string
+  ): Observable<Category[]> {
     let params = new HttpParams();
 
     if (query) {
       params = params.set('query', query);
+    }
+
+    if (sortBy) {
+      params = params.set('sortBy', sortBy);
+    }
+
+    if (sortOrder) {
+      params = params.set('sortOrder', sortOrder);
     }
 
     return this.http.get<Category[]>(

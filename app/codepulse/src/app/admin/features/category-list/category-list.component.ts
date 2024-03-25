@@ -20,4 +20,12 @@ export class CategoryListComponent implements OnInit {
   onSearch(queryText: string) {
     this.categories$ = this.categoryService.getAllCategories(queryText);
   }
+
+  sort(sortBy: string, sortOrder: string) {
+    this.categories$ = this.categoryService.getAllCategories(
+      undefined,
+      sortBy,
+      sortOrder
+    );
+  }
 }

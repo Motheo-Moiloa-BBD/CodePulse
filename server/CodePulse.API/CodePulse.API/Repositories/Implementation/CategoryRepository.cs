@@ -20,19 +20,29 @@ namespace CodePulse.API.Repositories.Implementation
             return category;
         }
 
-        
-        public async Task<IEnumerable<Category>> getAllAsync(string? query = null)
+
+        public async Task<IEnumerable<Category>> getAllAsync(string? query = null, string? sortBy = null, string? sortOrder = null)
         {
             //Query the DB
             var categories = dbContext.Categories.AsQueryable();
 
             //Filtering
-            if(string.IsNullOrWhiteSpace(query) == false)
+            if (string.IsNullOrWhiteSpace(query) == false)
             {
                 categories = categories.Where(x => x.Name.Contains(query));
             }
 
             //Sorting
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    var isAsc = string.Equals(sortOrder, "asc", StringComparison.OrdinalIgnoreCase) ? true : false;
+                    categories = isAsc ? categories.OrderBy(x => x.Name) : categories.OrderByDescending(x => x.Name);
+                }
+
+                //Can add another column to sort by
+            }
 
             //Pagination
 
@@ -48,7 +58,7 @@ namespace CodePulse.API.Repositories.Implementation
         {
             var exisitingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 
-            if(exisitingCategory != null) 
+            if (exisitingCategory != null)
             {
                 dbContext.Entry(exisitingCategory).CurrentValues.SetValues(category);
                 await dbContext.SaveChangesAsync();
@@ -61,8 +71,8 @@ namespace CodePulse.API.Repositories.Implementation
         public async Task<Category?> deleteAsync(Guid id)
         {
             var exisitingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            
-            if(exisitingCategory is null)
+
+            if (exisitingCategory is null)
             {
                 return null;
             }

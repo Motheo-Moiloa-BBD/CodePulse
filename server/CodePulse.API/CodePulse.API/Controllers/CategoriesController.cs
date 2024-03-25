@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using CodePulse.API.Data;
 using CodePulse.API.Models.Domain;
 using CodePulse.API.Models.DTO;
-using CodePulse.API.Repositories.Implementation;
 using CodePulse.API.Repositories.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,14 +35,14 @@ namespace CodePulse.API.Controllers
             //Map Domain Model to DTO
             var response = mapper.Map<Category, CategoryDTO>(savedCategory);
 
-            return CreatedAtAction("CreateCategory",response);
+            return CreatedAtAction("CreateCategory", response);
         }
 
-        //https://localhost:xxxx/api/categories?query=keyword
+        //https://localhost:xxxx/api/categories?query=keyword&sortBy=columnName&sortOrder=desc/asc
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string? sortBy, [FromQuery] string? sortOrder)
         {
-            var categories = await categoryRepository.getAllAsync(query);
+            var categories = await categoryRepository.getAllAsync(query, sortBy, sortOrder);
 
             //Map Domain model to DTO
             var response = mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
@@ -76,7 +74,8 @@ namespace CodePulse.API.Controllers
         [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateCategoryById([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
-            var category = new Category(){
+            var category = new Category()
+            {
                 Id = id,
                 Name = request.Name,
                 UrlHandle = request.UrlHandle,
@@ -84,7 +83,7 @@ namespace CodePulse.API.Controllers
 
             category = await categoryRepository.updateAsync(category);
 
-            if(category == null)
+            if (category == null)
             {
                 return NotFound("Category with id " + id + " not found.");
             }
@@ -102,7 +101,7 @@ namespace CodePulse.API.Controllers
         {
             var category = await categoryRepository.deleteAsync(id);
 
-            if(category == null)
+            if (category == null)
             {
                 return NotFound("Category with id " + id + " not found.");
             }
