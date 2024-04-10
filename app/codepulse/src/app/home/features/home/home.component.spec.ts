@@ -11,8 +11,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BlogPostService } from 'src/app/admin/data-access/services/blog-post.service';
 import { MockBlogPostService } from 'src/app/mocking/blog-post-service-mock';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { BlogDetailsComponent } from '../blog-details/blog-details.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -38,7 +37,7 @@ describe('HomeComponent', () => {
       imports: [
         HttpClientTestingModule,
         SharedModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
       ],
       declarations: [HomeComponent],
       providers: [{ provide: BlogPostService, useClass: MockBlogPostService }],

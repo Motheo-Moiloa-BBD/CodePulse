@@ -10,14 +10,12 @@ import { EditCategoryComponent } from './edit-category.component';
 import { CategoryService } from '../../data-access/services/category.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockCategoryService } from 'src/app/mocking/category-service-mock';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 import { CategoryListComponent } from '../category-list/category-list.component';
 import { Location } from '@angular/common';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Category } from '../../data-access/models/category.model';
 import { mockCategories } from 'src/app/mocking/mock-categories';
 
 describe('EditCategoryComponent', () => {
@@ -43,7 +41,7 @@ describe('EditCategoryComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
         ReactiveFormsModule,
       ],
       declarations: [EditCategoryComponent],

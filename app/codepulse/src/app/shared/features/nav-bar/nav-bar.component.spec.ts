@@ -12,11 +12,9 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import { DebugElement } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from 'src/app/home/features/home/home.component';
 import { MockAuthenticationService } from 'src/app/mocking/authentication-service-mock';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { LoginComponent } from 'src/app/authentication/features/login/login.component';
 import { SpinnerComponent } from '../../ui/spinner/spinner.component';
 import {
@@ -57,7 +55,7 @@ describe('NavBarComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
         CommonModule,
       ],
       declarations: [

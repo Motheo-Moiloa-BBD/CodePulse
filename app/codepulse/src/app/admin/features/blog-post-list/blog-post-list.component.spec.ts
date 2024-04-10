@@ -9,9 +9,8 @@ import {
 import { BlogPostListComponent } from './blog-post-list.component';
 import { AddBlogPostComponent } from '../add-blog-post/add-blog-post.component';
 import { EditBlogPostComponent } from '../edit-blog-post/edit-blog-post.component';
-import { Router, Routes } from '@angular/router';
+import { Router, Routes, RouterModule } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { MockBlogPostService } from 'src/app/mocking/blog-post-service-mock';
 import { Location } from '@angular/common';
@@ -41,10 +40,7 @@ describe('BlogPostListComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [BlogPostListComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
-      ],
+      imports: [HttpClientTestingModule, RouterModule.forRoot(routes)],
       providers: [{ provide: BlogPostService, useClass: MockBlogPostService }],
     }).compileComponents();
   }));

@@ -9,9 +9,8 @@ import {
 import { LoginComponent } from './login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationService } from '../../data-access/services/authentication.service';
-import { Router, Routes } from '@angular/router';
+import { Router, Routes, RouterModule } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from 'src/app/home/features/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
@@ -41,7 +40,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
         ReactiveFormsModule,
       ],
       providers: [
