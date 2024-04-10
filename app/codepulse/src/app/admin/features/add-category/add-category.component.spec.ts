@@ -11,10 +11,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CategoryService } from '../../data-access/services/category.service';
 import { MockCategoryService } from 'src/app/mocking/category-service-mock';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router, Routes } from '@angular/router';
+import { Router, Routes, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { CategoryListComponent } from '../category-list/category-list.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -40,7 +39,7 @@ describe('AddCategoryComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
       ],
       declarations: [AddCategoryComponent],
       providers: [{ provide: CategoryService, useClass: MockCategoryService }],

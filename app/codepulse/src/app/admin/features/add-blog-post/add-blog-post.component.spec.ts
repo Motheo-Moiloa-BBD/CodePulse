@@ -12,12 +12,10 @@ import { CategoryService } from '../../data-access/services/category.service';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { MockCategoryService } from 'src/app/mocking/category-service-mock';
 import { MockBlogPostService } from 'src/app/mocking/blog-post-service-mock';
-import { MarkdownComponent, MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule } from 'ngx-markdown';
 import { ImageService } from 'src/app/shared/data-access/services/image.service';
-import { Router, Routes } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Router, Routes, RouterModule } from '@angular/router';
 import { BlogPostListComponent } from '../blog-post-list/blog-post-list.component';
-import { ImageSelectorComponent } from 'src/app/shared/features/image-selector/image-selector.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockImageService } from 'src/app/mocking/image-service-mock';
@@ -49,7 +47,7 @@ describe('AddBlogPostComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
         MarkdownModule.forRoot(),
         SharedModule,
         ReactiveFormsModule,

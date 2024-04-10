@@ -82,13 +82,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "local": {
-              "browserTarget": "codepulse:build:local"
+              "buildTarget": "codepulse:build:local"
             },
             "development": {
-              "browserTarget": "codepulse:build:development"
+              "buildTarget": "codepulse:build:development"
             },
             "production": {
-              "browserTarget": "codepulse:build:production"
+              "buildTarget": "codepulse:build:production"
             }
           },
           "defaultConfiguration": "local"
@@ -96,7 +96,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "codepulse:build"
+            "buildTarget": "codepulse:build"
           }
         },
         "test": {

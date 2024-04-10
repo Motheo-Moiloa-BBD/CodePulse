@@ -10,13 +10,12 @@ import { CategoryListComponent } from './category-list.component';
 import { CategoryService } from '../../data-access/services/category.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockCategoryService } from 'src/app/mocking/category-service-mock';
-import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Router, Routes } from '@angular/router';
+import { Router, Routes, RouterModule } from '@angular/router';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { Location } from '@angular/common';
-import { of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { mockCategories } from 'src/app/mocking/mock-categories';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 
@@ -42,10 +41,7 @@ describe('CategoryListComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [CategoryListComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
-      ],
+      imports: [HttpClientTestingModule, RouterModule.forRoot(routes)],
       providers: [{ provide: CategoryService, useClass: MockCategoryService }],
     }).compileComponents();
   }));

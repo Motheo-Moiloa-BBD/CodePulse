@@ -10,11 +10,10 @@ import { EditBlogPostComponent } from './edit-blog-post.component';
 import { CategoryService } from '../../data-access/services/category.service';
 import { BlogPostService } from '../../data-access/services/blog-post.service';
 import { DebugElement } from '@angular/core';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router, Routes, RouterModule } from '@angular/router';
 import { ImageService } from 'src/app/shared/data-access/services/image.service';
 import { BlogPostListComponent } from '../blog-post-list/blog-post-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MockCategoryService } from 'src/app/mocking/category-service-mock';
 import { MockBlogPostService } from 'src/app/mocking/blog-post-service-mock';
 import { MockImageService } from 'src/app/mocking/image-service-mock';
@@ -52,7 +51,7 @@ describe('EditBlogPostComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterModule.forRoot(routes),
         MarkdownModule.forRoot(),
         SharedModule,
         ReactiveFormsModule,
